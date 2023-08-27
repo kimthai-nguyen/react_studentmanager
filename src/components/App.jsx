@@ -4,15 +4,18 @@ import StudentForm from './StudentForm';
 import './App.scss';
 
 function App() {
-  const [students, setStudents] = useState([]);
+  // const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState(JSON.parse(localStorage.getItem("students") ?? "[]"));
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   const addStudent = student => {
     setStudents([...students, student]);
+    localStorage.setItem("students",JSON.stringify(students))
   };
 
   const editStudent = student => {
     setSelectedStudent(student);
+    localStorage.setItem("students",JSON.stringify(students))
   };
   const updateStudent = updatedStudent => {
     const updatedStudents = students.map(student =>
@@ -20,11 +23,14 @@ function App() {
     );
     setStudents(updatedStudents);
     setSelectedStudent(null);
+    localStorage.setItem("students",JSON.stringify(updatedStudents))
+
   };
 
   const deleteStudent = studentId => {
     const updatedStudents = students.filter(student => student.id !== studentId);
     setStudents(updatedStudents);
+    localStorage.setItem("students",JSON.stringify(updatedStudents))
   };
 
   return (
